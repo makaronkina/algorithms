@@ -86,13 +86,23 @@ public class ChainingHashMap<Key, Value> {
     public boolean remove(Key key) {
         checkNotNull(key);
         int i = hash(key);
-        boolean removed = false;
-        if (st[i].removeIf(k -> contains(key))) {
-            removed = true;
-        }
         size--;
-        return removed;
+        return st[i].removeIf(node -> node.key.equals(key));
     }
+
+//    private void reCapacity() {
+//        if (size >= capacity * 0.75) {
+//            int newCapacity = capacity + capacity / 2;
+//            LinkedList<Node>[] st2 = new LinkedList[newCapacity];
+//            for (int i = 0; i < st2.length; i++) {
+//                st2[i] = new LinkedList<>();
+//            }
+//            System.arraycopy(st, 0, st2, 0, size);
+//            capacity = newCapacity;
+//
+//            st = st2;
+//        }
+//    }
 
     @Override
     public String toString() {
